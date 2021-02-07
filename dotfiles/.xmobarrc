@@ -1,0 +1,38 @@
+Config { 
+	font="xft:Bitstream Vera Sans Mono:size=11:antialias=true",
+	additionalFonts = ["xft:Symbols Nerd Font:size=10"],
+	bgColor = "black",
+	fgColor = "#787576",
+	position = Top,
+	textOffset = -1,
+	iconOffset = -1,
+	hideOnStart = False,
+	lowerOnStart = True,
+	overrideRedirect = False,
+	border = NoBorder,
+	sepChar = "%",
+	alignSep = "}{",
+	template = " %StdinReader% }{ %battery%  %date% ",
+	commands = [
+		Run StdinReader,
+		Run Battery [
+			"--template" , "<acstatus>",
+			"--Low"      , "10",       -- units: %
+			"--High"     , "50",       -- units: %
+			"--low"      , "darkred",
+			"--normal"   , "darkorange",
+			"--", -- battery specific options
+			-- discharging status
+			"-o"	, "<leftipat> <left>%",
+			-- AC "on" status
+			"-O"	, "<leftipat> <left>%",
+			"-i"	, "<leftipat> <left>%",
+			-- charged status
+			--"-i"	, "<fn=1>\xf240</fn>",
+			"--off-icon-pattern", "<fn=1>\xf240</fn>",
+			"--on-icon-pattern", "<fn=1>\xf0e7</fn>",
+			"--idle-icon-pattern", "<fn=1>\xf0e7</fn>"
+		] 30,
+		Run Date           "[%a] %m/%d %H:%M:%S" "date" 10
+	]
+}
